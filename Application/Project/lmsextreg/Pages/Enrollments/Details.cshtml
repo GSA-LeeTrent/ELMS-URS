@@ -1,0 +1,72 @@
+@page "{id:int}"
+@model lmsextreg.Pages.Enrollments.DetailsModel
+
+@{
+    ViewData["Title"] = "Enrollment Details";
+}
+<h2>@Html.DisplayFor(model => model.ProgramEnrollment.LMSProgram.LongName)</h2>
+<h4>Enrollment Application Details</h4>
+ <hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>Applicant's Name:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.FullName)
+        </dd>
+        <dt>Email Address:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.UserName)
+        </dd>
+        <dt>Agency:</dt>   
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.Agency.AgencyName)
+        </dd>    
+        <dt>Sub-Agency:</dt>   
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.SubAgency.SubAgencyName)
+        </dd>     
+        <dt>Job Title:</dt>   
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.JobTitle)
+        </dd>  
+        <dt>Program Name:</dt>  
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.LMSProgram.LongName)
+        </dd>
+        <dt>Enrollment Status:</dt>   
+        <dd>
+            <span style="border: 2px solid red;font-weight:bold;">@Html.DisplayFor(model => model.ProgramEnrollment.EnrollmentStatus.StatusLabel)</span>
+        </dd>     
+        <dt>Enrollment History:</dt>   
+        <dd>
+            <table class="table table-bordered table-striped table-sm" style="width=50%;">
+                <thead>
+                    <tr style="color:#FFF;background-color:#A9A9A9">
+                        <td>Who</td>
+                        <td>What</td>
+                        <td>When</td>
+                        <td>Remarks</td>
+                    </tr> 
+                </thead> 
+                <tbody>
+                    @foreach (var item in Model.EnrollmentHistory) 
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Actor.FullName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.StatusTransition.TransitionLabel)</td>                            
+                            <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ActorRemarks)</td> 
+                        </tr>
+                    }                    
+                </tbody>
+            </table>      
+        </dd>                                       
+    </dl>   
+</div>
+<div class="form-group">   
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

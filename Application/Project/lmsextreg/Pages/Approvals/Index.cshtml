@@ -1,0 +1,84 @@
+@page
+@model lmsextreg.Pages.Approvals.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 style="margin-bottom: 2px;">@Model.LoggedInUser.FullName</h3>
+<h4 style="margin-top: 2px;">Programs Enrollments</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProgramEnrollment[0].LMSProgram)
+            </th>     
+            <th>
+                @Html.DisplayNameFor(model => model.ProgramEnrollment[0].Student)
+            </th>   
+           <th>
+                @Html.DisplayNameFor(model => model.ProgramEnrollment[0].Student.Agency.AgencyName)
+            </th>                              
+            <th>
+                @Html.DisplayNameFor(model => model.ProgramEnrollment[0].EnrollmentStatus)
+            </th>   
+            <th>
+                @Html.DisplayNameFor(model => model.ProgramEnrollment[0].Approver)
+            </th>                                
+            <th>
+                @Html.DisplayNameFor(model => model.ProgramEnrollment[0].DateCreated)
+            </th>
+            <th>Available Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProgramEnrollment) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LMSProgram.LongName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.FullName)
+                </td>  
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Agency.AgencyName)
+                </td>                             
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnrollmentStatus.StatusLabel)
+                </td> 
+                <td>
+                    @Html.DisplayFor(modelItem => item.Approver.FullName)
+                </td>                                    
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @if ( item.StatusCode == @Model.PENDING)
+                    {
+                        <a asp-page="./Review"  asp-route-id="@item.ProgramEnrollmentID">Review</a>
+                        @(" | ")
+                        <a asp-page="./Review"  asp-route-id="@item.ProgramEnrollmentID">Approve/Deny</a>
+                    }
+                    @if ( item.StatusCode == @Model.APPROVED )
+                    {
+                        <a asp-page="./Review"  asp-route-id="@item.ProgramEnrollmentID">Review</a>
+                        @(" | ")
+                        <a asp-page="./Review"  asp-route-id="@item.ProgramEnrollmentID">Revoke</a>
+                    }                                         
+                    @if ( item.StatusCode == @Model.DENIED)
+                    {
+                        <a asp-page="./Review"  asp-route-id="@item.ProgramEnrollmentID">Review</a>
+                        @(" | ")
+                        <a asp-page="./Review"  asp-route-id="@item.ProgramEnrollmentID">Approve</a>
+                    }
+                    @if ( item.StatusCode == @Model.WITHDRAWN || item.StatusCode == @Model.REVOKED )
+                    {
+                        <a asp-page="./Review"  asp-route-id="@item.ProgramEnrollmentID">Review</a>
+                    }  
+                </td>
+            </tr>
+        }
+    </tbody> 
+</table>

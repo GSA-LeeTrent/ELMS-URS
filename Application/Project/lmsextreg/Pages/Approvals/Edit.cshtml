@@ -1,0 +1,52 @@
+@page "{id:int}"
+@model lmsextreg.Pages.Approvals.EditModel
+
+@{
+    ViewData["Title"] = "Approvals";
+}
+<h2>Approve/Deny</h2>
+<div>
+    <h4>Enrollment Application</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Applicant's Name:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.FullName)
+        </dd>
+        <dt>Email Address:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.UserName)
+        </dd>
+        <dt>Agency:</dt>   
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.Agency.AgencyName)
+        </dd>    
+        <dt>Sub-Agency:</dt>   
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.SubAgency.SubAgencyName)
+        </dd>     
+        <dt>Job Title:</dt>   
+        <dd>
+            @Html.DisplayFor(model => model.ProgramEnrollment.Student.JobTitle)
+        </dd>                          
+    </dl>   
+</div>
+<div class="form-group">
+    <form style="display:inline;" method="post">
+        <input type="hidden" name="id" value="@Model.ProgramEnrollment.ProgramEnrollmentID" />
+        <input type="hidden" name="status" value="APPROVED" />
+        <button type="submit" class="btn btn-xs btn-success">Approve</button>
+    </form>
+    <form style="display:inline;" method="post">
+        <input type="hidden" name="id" value="@Model.ProgramEnrollment.ProgramEnrollmentID" />
+        <input type="hidden" name="status" value="DENIED" />
+        <button type="submit" class="btn btn-xs btn-danger">Deny</button>
+    </form>
+</div>
+<div class="form-group">   
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
