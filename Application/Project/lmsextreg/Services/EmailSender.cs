@@ -43,7 +43,7 @@ namespace lmsextreg.Services
             };
             //client.EnableSsl = true;
               
-            MailAddress fromAddress = new MailAddress("ELMSRegistration@gsa.com", "LMS Registration and Enrollment");
+            MailAddress fromAddress = new MailAddress("ELMSRegistration@gsa.gov", "LMS Registration and Enrollment");
             MailAddress toAddress   = new MailAddress(toEmail);
             
             MailMessage mailMessage     = new MailMessage(fromAddress, toAddress);
@@ -63,7 +63,7 @@ namespace lmsextreg.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("LMSExtRegAdmin@gsa.com", "LMS Registration and Enrollment"),
+                From = new EmailAddress("LMSExtRegAdmin@gsa.gov", "LMS Registration and Enrollment"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
