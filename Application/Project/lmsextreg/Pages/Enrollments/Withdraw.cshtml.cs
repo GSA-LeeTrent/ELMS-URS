@@ -239,7 +239,8 @@ namespace lmsextreg.Pages.Enrollments
                                     .Where(p => p.LMSProgramID == lvProgramEnrollment.LMSProgramID && p.CommonInbox != null)
                                     .AsNoTracking()
                                     .SingleOrDefaultAsync();
-            if ( String.IsNullOrEmpty(lmsProgram.CommonInbox) == false )
+            if ( lmsProgram != null
+		   && String.IsNullOrEmpty(lmsProgram.CommonInbox) == false )
             {
                 string email = lmsProgram.CommonInbox;
                 string subject  = "Program Enrollment Withdrawal (" + lmsProgram.LongName + ")";
